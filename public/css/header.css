@@ -1,0 +1,105 @@
+header{
+    display: flex;
+    justify-content: space-between;
+    min-height: 60px;
+    background-color: #1fa1b3;
+    align-items: center;
+    padding: 5px;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
+.logo img{
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1000%) contrast(1000%);
+ height: 55px;
+}
+
+
+header button{
+    position: relative;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    background: rgb(208, 248, 253);
+    color: #1fa1b3;
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 700;
+    transition: .7s;
+    overflow: hidden;
+    border-style: inset;
+    border-radius: 20px;
+    border-color: #1fa1b3;
+}
+
+header button:hover{
+    background: #1fa1b3;
+    color: white;
+    font-style: italic;
+    font-weight: 700;
+    border-style: double;
+    border-color: white;
+    border-radius: 0;
+}
+
+header button span{
+  position: absolute;
+  background: white;
+  transition: .7s;   
+}
+
+header button span:nth-child(1){
+    width: 100%;
+    height: 1px;
+    top: 0;
+    left: -100%;
+}
+
+header button span:nth-child(2){
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    right: -100%;
+}
+
+header button span:nth-child(3){
+    width: 1px;
+    height: 100%;
+    bottom: -100%;
+    left: 0;
+}
+
+header button span:nth-child(4){
+    width: 1px;
+    height: 100%;
+    top: -100%;
+    right: 0;
+}
+
+header button:hover span:nth-child(1){
+    left: 0;
+}
+header button:hover span:nth-child(2){
+    right: 0;
+}
+header button:hover span:nth-child(3){
+    bottom: 0;
+}
+header button:hover span:nth-child(4){
+    top: 0;
+}
+
+body{
+    margin: 0;
+}
+
+@media(max-witdh:700px){
+    header{
+        flex-direction: column;
+    }
+    
+    nav{
+        padding: 10px 0px;
+    }
+}
