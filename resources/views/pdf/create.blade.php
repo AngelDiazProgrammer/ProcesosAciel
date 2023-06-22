@@ -2,6 +2,11 @@
  
 @section('title', 'Index')
 
+@section('styles')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/tables.css') }}">
+@endpush
+
 @section('content')
 <form action="{{ route('pdf.store') }}" method="POST" enctype="multipart/form-data">
     @csrf

@@ -1,10 +1,14 @@
 @extends('layouts.plantilla')
  
+@section('styles')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/tables.css') }}">
+@endpush
 @section('title', 'Index')
 
 @section('content')
-
-<table class="table">
+<div class="container"> 
+    <table>
     <thead>
         <tr>
             <th>ID</th>
@@ -19,7 +23,7 @@
                     <td>{{ $pdf->id }}</td>
                     <td>{{ $pdf->nombre_archivo }}</td>
                     <td>
-                        <a href="{{ route('pdf.show', $pdf->nombre_archivo) }}" target="_blank">Abrir</a>
+                        <a href="{{ route('pdf.show', $pdf->nombre_archivo) }}" target="_blank"><button class="btn btn-info">Abrir</button></a>
                     </td>
                 </tr>
             @endforeach
@@ -30,4 +34,5 @@
         @endif
     </tbody>
 </table>
+</div>
 @endsection

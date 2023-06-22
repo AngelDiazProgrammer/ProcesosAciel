@@ -18,7 +18,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-
 //Rutas hacia los metodos del controlador PDF
 //Ruta para mostrar el form
 Route::get('/upload-pdf', [PdfController::class, 'create'])->name('pdf.create');
@@ -29,5 +28,6 @@ Route::get('/pdf', [PdfController::class, 'index'])->name('pdf.index');
 //Ruta para visualizar archivo
 Route::get('storage/{nombre_archivo}', [PdfController::class, 'show'])->name('pdf.show');
 
+//Rutas adicionales
 
 

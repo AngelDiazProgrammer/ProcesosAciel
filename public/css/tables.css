@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+div table{
+    font-family: sans-serif;
+}
+
+body{
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+}
+
+.container{
+    border: solid 1px ;
+}
+
+table{
+    font-size: 17px;
+    table-layout: fixed;  
+    border-collapse: collapse;  
+    background-color: #32bcce;
+}
+
+thead{
+    background-color: #198694;
+}
+th{
+    text-transform: uppercase;
+    padding: 20px 10px;
+    font-weight: 700;
+}
+
+td{
+    padding: 10px;
+    border-bottom: solid 1px #000000;
+}
+
+tbody tr:hover{
+background-color: #198694;
+}
+
+
