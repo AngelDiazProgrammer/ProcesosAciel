@@ -15,6 +15,10 @@
     <form action="{{ route('pdf.create') }}" method="GET">
         <button type="submit" class="btn btn-danger">cargar nuevo archivo</button>
     </form>
+    <form action="{{ route('sistemas.index') }}" method="GET">
+        <button type="submit" class="btn btn-danger">sistemas</button>
+    </form>
+   
 @endsection
 
 

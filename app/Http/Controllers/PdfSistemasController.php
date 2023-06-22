@@ -1,29 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\File;
+
 use App\Models\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
 
-
-class PdfController extends Controller
+class PdfSistemasController extends Controller
 {
-   //subir archivos
+    //
     public function create()
     {
-        return view('pdf.create');
+        return view('sistemas.createsistemas');
     }
 
     //recuperar y mostrar archivos
     public function index()
-{
-    $pdfs = Pdf::all();
-
-    return view('pdf.index', compact('pdfs'));
-}
+    {
+        $sistemasPath = public_path('storage/sistemas');
+        $pdfs = File::files($sistemasPath);
+    
+        return view('sistemas.indexsistemas', compact('pdfs'));
+    }
 
 //cargar archivos 
 public function store(Request $request)
@@ -38,14 +38,14 @@ public function store(Request $request)
 
         if ($file) {
             $fileName = $file->getClientOriginalName(); // Obtiene el nombre original del archivo
-            $filePath = $file->storeAs('/', $fileName, 'public');
+            $filePath = $file->storeAs('sistemas', $fileName, 'public');
             $pdf->nombre_archivo = $fileName;
             $pdf->ruta_archivo = '/storage/' . $filePath;
             $pdf->save();
         }
     }
 
-    return redirect()->route('pdf.index')->with('success', 'Archivo PDF subido exitosamente.');
+    return redirect()->route('sistemas.index')->with('success', 'Archivo PDF subido exitosamente.');
 }
 
 //ver archivos 
@@ -62,31 +62,24 @@ public function show($nombre_archivo)
 
     $pdf = Storage::url($pdfPath);
 
-    return view('pdf.show', compact('pdfUrl'));
+    return view('sistemas.show', compact('pdfUrl'));
 }
 
 public function destroy($nombre_archivo)
 {
-    // Buscar el archivo en la base de datos
+    
+
+    // Eliminar la entrada correspondiente en la base de datos
     $pdf = Pdf::where('nombre_archivo', $nombre_archivo)->first();
-
-    if (!$pdf) {
-        return redirect()->back()->with('error', 'Archivo no encontrado');
+    if ($pdf) {
+        $pdf->delete();
     }
+// Eliminar el archivo de la carpeta 'sistemas' en storage
+    unlink(public_path('storage/sistemas'.'/'. $pdf->nombre_archivo));
 
-    // Eliminar el archivo de almacenamiento
-    unlink(public_path('storage'.'/'. $pdf->nombre_archivo));
-
-    // Eliminar el registro de la base de datos
-    $pdf->delete();
-
-    return redirect()->back()->with('success', 'Archivo eliminado exitosamente');
+    return redirect()->route('sistemas.index')->with('success', 'Archivo PDF eliminado exitosamente.');
 }
 
 
 
 }
-
-
-
-

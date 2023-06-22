@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\PdfSistemasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +19,30 @@ Route::get('/', function () {
     return view('index');
 });
 
-//Rutas hacia los metodos del controlador PDF
-//Ruta para mostrar el form
+// Rutas hacia los métodos del controlador PDF
+// Ruta para mostrar el formulario de carga de PDF
 Route::get('/upload-pdf', [PdfController::class, 'create'])->name('pdf.create');
-//ruta para cargar los archivos
+// Ruta para procesar la carga de los archivos PDF
 Route::post('/upload-pdf', [PdfController::class, 'store'])->name('pdf.store');
-//ruta para imprimir los archivos
-Route::get('/pdf', [PdfController::class, 'index'])->name('pdf.index');
-//Ruta para visualizar archivo
+// Ruta para mostrar todos los PDF
+Route::get('/pdfs', [PdfController::class, 'index'])->name('pdf.index');
+// Ruta para mostrar un PDF específico
 Route::get('storage/{nombre_archivo}', [PdfController::class, 'show'])->name('pdf.show');
+// Ruta para eliminar un pdf 
+Route::delete('/pdf/{nombre_archivo}', [PdfController::class, 'destroy'])->name('pdf.destroy');
 
-//Rutas adicionales
+
+
+// Rutas para los PDFs en sistemas
+// Ruta para mostrar los PDFs en sistemas
+Route::get('/pdfs-sistemas', [PdfSistemasController::class, 'index'])->name('sistemas.index');
+// Ruta para cargar nuevos archivos en sistemas
+Route::get('/upload-pdf-sistemas', [PdfSistemasController::class, 'create'])->name('sistemas.create');
+
+Route::post('/upload-pdf-sistemas', [PdfSistemasController::class, 'store'])->name('sistemas.store');
+
+Route::get('storage/Sistemas/{nombre_archivo}', [PdfSistemasController::class, 'show'])->name('sistemas.show');
+
+Route::delete('/sistemas/{nombre_archivo}', [PdfSistemasController::class, 'destroy'])->name('sistemas.destroy');
 
 

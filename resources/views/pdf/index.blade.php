@@ -23,7 +23,14 @@
                     <td>{{ $pdf->id }}</td>
                     <td>{{ $pdf->nombre_archivo }}</td>
                     <td>
-                        <a href="{{ route('pdf.show', $pdf->nombre_archivo) }}" target="_blank"><button class="btn btn-info">Abrir</button></a>
+                    <a href="{{ route('pdf.show', $pdf->nombre_archivo) }}" target="_blank"><button class="btn btn-info">Abrir</button></a>
+                    
+                       <form action="{{ route('pdf.destroy', $pdf->nombre_archivo) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>                        
+                        </form>
+
                     </td>
                 </tr>
             @endforeach

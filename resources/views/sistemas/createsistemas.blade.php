@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-<form action="{{ route('pdf.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('sistemas.store') }}" method="POST" enctype="multipart/form-data">
   @csrf
   <div>
     <label for="pdf">Seleccionar archivo PDF:</label>
