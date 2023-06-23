@@ -4,13 +4,25 @@
 @push('styles')
 
 <link rel="stylesheet" href="{{ asset('css/tables.css') }}">
+<link rel="stylesheet" href="{{ asset('css/search.css') }}">
 @endpush
 @section('title', 'Index')
 @section('content')
 
+<div class="container">
+    <form action="{{ route('sistemas.busqueda') }}" method="GET" class="search">        
+        <input type="text" name="busquedasistemas" id="texto" class="form-control" placeholder="Buscar un archivo">
+        <input type="submit" value="Buscar" class="btn btn-primary">
+    </form>
+</div>
+
+    
+</div>
+<div class="container">
 <form action="{{ route('sistemas.create') }}" method="GET">
     <button type="submit" class="btn btn-danger">cargar nuevo archivo</button>
 </form>
+</div>
 <div class="container">
     <table>
         <thead>
@@ -44,4 +56,6 @@
         </tbody>
     </table>
 </div>
+
+
 @endsection

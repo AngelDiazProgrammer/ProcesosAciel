@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PdfSistemasController;
+use App\Http\Controllers\SeacrhController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::get('/pdfs', [PdfController::class, 'index'])->name('pdf.index');
 Route::get('storage/{nombre_archivo}', [PdfController::class, 'show'])->name('pdf.show');
 // Ruta para eliminar un pdf 
 Route::delete('/pdf/{nombre_archivo}', [PdfController::class, 'destroy'])->name('pdf.destroy');
+//Ruta del buscador
+Route::get('/pdfs-busqueda', [PdfController::class, 'busqueda'])->name('pdf.busqueda');
 
 
 
@@ -44,5 +47,15 @@ Route::post('/upload-pdf-sistemas', [PdfSistemasController::class, 'store'])->na
 Route::get('storage/Sistemas/{nombre_archivo}', [PdfSistemasController::class, 'show'])->name('sistemas.show');
 
 Route::delete('/sistemas/{nombre_archivo}', [PdfSistemasController::class, 'destroy'])->name('sistemas.destroy');
+//Ruta del buscador
+Route::get('/sistemas-busqueda', [PdfSistemasController::class, 'busqueda'])->name('sistemas.busqueda');
+
+
+
+
+
+
+
+
 
 

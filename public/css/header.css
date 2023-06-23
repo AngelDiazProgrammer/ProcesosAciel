@@ -1,25 +1,26 @@
-header{
+header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     min-height: 60px;
     background-color: #1fa1b3;
     align-items: center;
     padding: 5px;
-    position: fixed;
-  top: 0;
-  width: 100%;
-}
-.logo{
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  
+  .logo {
     display: flex;
     align-items: center;
-}
-.logo img{
+  }
+  
+  .logo img {
     filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1000%) contrast(1000%);
- height: 55px;
-}
-
-
-header button{
+    height: 55px;
+  }
+  
+  header button {
     position: relative;
     padding: 10px 15px;
     border: none;
@@ -34,9 +35,9 @@ header button{
     border-style: inset;
     border-radius: 20px;
     border-color: #1fa1b3;
-}
-
-header button:hover{
+  }
+  
+  header button:hover {
     background: #1fa1b3;
     color: white;
     font-style: italic;
@@ -44,67 +45,65 @@ header button:hover{
     border-style: double;
     border-color: white;
     border-radius: 0;
-}
-
-header button span{
-  position: absolute;
-  background: white;
-  transition: .7s;   
-}
-
-header button span:nth-child(1){
+  }
+  
+  header button span {
+    position: absolute;
+    background: white;
+    transition: .7s;   
+  }
+  
+  header button span:nth-child(1) {
     width: 100%;
     height: 1px;
     top: 0;
     left: -100%;
-}
-
-header button span:nth-child(2){
+  }
+  
+  header button span:nth-child(2) {
     width: 100%;
     height: 1px;
     bottom: 0;
     right: -100%;
-}
-
-header button span:nth-child(3){
+  }
+  
+  header button span:nth-child(3) {
     width: 1px;
     height: 100%;
     bottom: -100%;
     left: 0;
-}
-
-header button span:nth-child(4){
+  }
+  
+  header button span:nth-child(4) {
     width: 1px;
     height: 100%;
     top: -100%;
     right: 0;
-}
-
-header button:hover span:nth-child(1){
+  }
+  
+  header button:hover span:nth-child(1) {
     left: 0;
-}
-header button:hover span:nth-child(2){
+  }
+  
+  header button:hover span:nth-child(2) {
     right: 0;
-}
-header button:hover span:nth-child(3){
+  }
+  
+  header button:hover span:nth-child(3) {
     bottom: 0;
-}
-header button:hover span:nth-child(4){
+  }
+  
+  header button:hover span:nth-child(4) {
     top: 0;
-}
-
-body{
-    min-height: 100vh;
-    margin: 0;
-    background: radial-gradient(#22c7dd,#22c7dd,#22c7dd,#ffffff,#ffffff,#ffffff,#ffffff)
-}
-
-@media(max-witdh:700px){
-    header{
-        flex-direction: column;
+  }
+  
+  @media (max-width: 700px) {
+    header {
+      flex-direction: column;
     }
     
-    nav{
-        padding: 10px 0px;
+    nav {
+      padding: 10px 0px;
     }
-}
+  }
+  

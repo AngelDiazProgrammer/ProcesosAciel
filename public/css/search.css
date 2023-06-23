@@ -1,20 +1,21 @@
-.search{
+form{
     position: relative;
-    height: 35px;
-    border: none;
-    width: 30%;
-    padding-left: 50px;
+    height: 30px;
+    border: none; 
+    justify-content: space-between;
+    width: 40%;
 }
 
 .search input{
     height: 35px;
     text-indent: 25px;
     border-radius: 10px;
-    width: 80%;
+    width: 50%;
     border: 2px solid #ffffff;
     padding: 4px;
     background-color: #318999;    
     caret-color: #000000;
+    
 }
 
 .search input:hover{

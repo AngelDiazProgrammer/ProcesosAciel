@@ -83,9 +83,15 @@ public function destroy($nombre_archivo)
     return redirect()->back()->with('success', 'Archivo eliminado exitosamente');
 }
 
+public function busqueda(Request $request)
+    {
+       $busqueda=  $request->busqueda;
+       $pdfs = Pdf::where('nombre_archivo', 'LIKE','%'.$busqueda.'%')->paginate(100);
 
-
+    return view('pdf.index', compact('pdfs'));
+    }
 }
+
 
 
 

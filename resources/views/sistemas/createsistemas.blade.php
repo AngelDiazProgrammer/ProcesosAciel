@@ -8,6 +8,8 @@
 @endpush
 
 @section('content')
+
+<div class="container">
 <form action="{{ route('sistemas.store') }}" method="POST" enctype="multipart/form-data">
   @csrf
   <div>
@@ -18,5 +20,5 @@
     <button type="submit">Cargar PDF</button>
   </div>
 </form>
-
+</div>
   @endsection

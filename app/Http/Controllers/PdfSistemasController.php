@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
 
 class PdfSistemasController extends Controller
 {
@@ -81,5 +83,56 @@ public function destroy($nombre_archivo)
 }
 
 
+public function busqueda(Request $request)
+{
+    $busqueda = $request->input('busqueda');
+
+    // Ruta de la carpeta sistemas
+    $sistemasPath = storage_path('app/public/sistemas');
+
+    // Obtener la lista de archivos en la carpeta sistemas
+    $archivos = collect(Storage::files('sistemas'))->map(function ($archivo) use ($sistemasPath) {
+        return $sistemasPath . '/' . $archivo;
+    });
+
+    // Filtrar los archivos según la búsqueda
+    $archivosFiltrados = $archivos->filter(function ($archivo) use ($busqueda) {
+        return strpos(basename($archivo), $busqueda) !== false;
+    });
+
+    // Obtener los nombres de archivo filtrados
+    $nombresArchivosFiltrados = $archivosFiltrados->map(function ($archivo) {
+        return basename($archivo);
+    });
+
+    // Buscar los registros en la base de datos utilizando los nombres de archivo filtrados
+    $pdfs = Pdf::whereIn('nombre_archivo', $nombresArchivosFiltrados)->get();
+
+    // Paginar los archivos filtrados
+    $page = $request->query('page', 1);
+    $perPage = 100;
+    $total = $archivosFiltrados->count();
+
+    $pdfs = new LengthAwarePaginator(
+        $pdfs->forPage($page, $perPage)->values(),
+        $total,
+        $perPage,
+        $page,
+        ['path' => url()->current()]
+    );
+
+    return view('sistemas.indexsistemas', compact('pdfs'));
+}
+
+
+
+
+
+
+
 
 }
+
+
+
+
