@@ -1,12 +1,14 @@
 @extends('layouts.plantilla')
 
 @section('styles')
-@push('styles')
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/tables.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/search.css') }}">
+    @endpush
+@endsection
 
-<link rel="stylesheet" href="{{ asset('css/tables.css') }}">
-<link rel="stylesheet" href="{{ asset('css/search.css') }}">
-@endpush
 @section('title', 'Index')
+
 @section('content')
 
 <div class="container">
@@ -16,13 +18,12 @@
     </form>
 </div>
 
-    
-</div>
 <div class="container">
-<form action="{{ route('sistemas.create') }}" method="GET">
-    <button type="submit" class="btn btn-danger">cargar nuevo archivo</button>
-</form>
+    <form action="{{ route('sistemas.create') }}" method="GET">
+        <button type="submit" class="btn btn-danger">Cargar nuevo archivo</button>
+    </form>
 </div>
+
 <div class="container">
     <table>
         <thead>
@@ -33,14 +34,20 @@
             </tr>
         </thead>
         <tbody>
-            @if (!empty($pdfs))
-                @foreach ($pdfs as $pdf)
+            @if ($filteredFiles->isEmpty())
+                <tr>
+                    <td colspan="3">No se encontraron archivos.</td>
+                </tr>
+            @else
+                @foreach ($filteredFiles as $file)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ basename($pdf) }}</td>
+                        <td>{{ $file->getFilename() }}</td>
                         <td>
-                            <a href="{{ route('sistemas.show', basename($pdf)) }}" target="_blank"><button class="btn btn-info">Abrir</button></a>
-                            <form action="{{ route('sistemas.destroy', basename($pdf)) }}" method="POST">
+                            <a href="{{ route('sistemas.show', basename($file)) }}" target="_blank">
+                                <button class="btn btn-info">Abrir</button>
+                            </a>
+                            <form action="{{ route('sistemas.destroy', basename($file)) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>                        
@@ -48,14 +55,9 @@
                         </td>
                     </tr>
                 @endforeach
-            @else
-                <tr>
-                    <td colspan="3">No se encontraron PDFs</td>
-                </tr>
             @endif
         </tbody>
     </table>
 </div>
-
 
 @endsection

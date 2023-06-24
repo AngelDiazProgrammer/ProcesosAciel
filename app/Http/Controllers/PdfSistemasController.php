@@ -85,44 +85,23 @@ public function destroy($nombre_archivo)
 
 public function busqueda(Request $request)
 {
-    $busqueda = $request->input('busqueda');
+    $keyword = $request->input('busqueda');
 
-    // Ruta de la carpeta sistemas
-    $sistemasPath = storage_path('app/public/sistemas');
+    $directory = public_path('storage/sistemas'); // Ruta completa a la subcarpeta "sistemas" dentro de "storage/app"
 
-    // Obtener la lista de archivos en la carpeta sistemas
-    $archivos = collect(Storage::files('sistemas'))->map(function ($archivo) use ($sistemasPath) {
-        return $sistemasPath . '/' . $archivo;
+    $files = File::allFiles($directory); // Obtener todos los archivos dentro de la carpeta
+
+    $filteredFiles = collect($files)->filter(function ($file) use ($keyword) {
+        return str_contains($file->getFilename(), $keyword); // Filtrar los archivos que contengan la palabra clave en su nombre
     });
 
-    // Filtrar los archivos según la búsqueda
-    $archivosFiltrados = $archivos->filter(function ($archivo) use ($busqueda) {
-        return strpos(basename($archivo), $busqueda) !== false;
-    });
+    // Obtener todos los archivos sin filtrar
+    $allFiles = File::allFiles($directory);
 
-    // Obtener los nombres de archivo filtrados
-    $nombresArchivosFiltrados = $archivosFiltrados->map(function ($archivo) {
-        return basename($archivo);
-    });
-
-    // Buscar los registros en la base de datos utilizando los nombres de archivo filtrados
-    $pdfs = Pdf::whereIn('nombre_archivo', $nombresArchivosFiltrados)->get();
-
-    // Paginar los archivos filtrados
-    $page = $request->query('page', 1);
-    $perPage = 100;
-    $total = $archivosFiltrados->count();
-
-    $pdfs = new LengthAwarePaginator(
-        $pdfs->forPage($page, $perPage)->values(),
-        $total,
-        $perPage,
-        $page,
-        ['path' => url()->current()]
-    );
-
-    return view('sistemas.indexsistemas', compact('pdfs'));
+    // Puedes pasar tanto los archivos filtrados como los no filtrados a la vista
+    return view('sistemas.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
 }
+
 
 
 
