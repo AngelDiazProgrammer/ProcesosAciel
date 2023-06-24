@@ -19,6 +19,9 @@
     <form action="{{ route('sistemas.index') }}" method="GET">
         <button type="submit" class="btn btn-danger">sistemas</button>
     </form>
+    <form action="{{ route('contabilidad.index') }}" method="GET">
+        <button type="submit" class="btn btn-danger">contabilidad</button>
+    </form>
 </div>
 @endsection
 

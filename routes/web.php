@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PdfSistemasController;
-use App\Http\Controllers\SeacrhController;
+use App\Http\Controllers\PdfContabilidadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +51,19 @@ Route::delete('/sistemas/{nombre_archivo}', [PdfSistemasController::class, 'dest
 Route::get('/sistemas-busqueda', [PdfSistemasController::class, 'busqueda'])->name('sistemas.busqueda');
 
 
+// Rutas para los PDFs en contabilidiad
+// Ruta para mostrar los PDFs en contabilidad
+Route::get('/pdfs-contabilidad', [PdfContabilidadController::class, 'index'])->name('contabilidad.index');
+// Ruta para cargar nuevos archivos Contabilidad
+Route::get('/upload-pdf-contabilidad', [PdfContabilidadController::class, 'create'])->name('contabilidad.create');
 
+Route::post('/upload-pdf-contabilidad', [PdfContabilidadController::class, 'store'])->name('contabilidad.store');
 
+Route::get('storage/contabilidad/{nombre_archivo}', [PdfContabilidadController::class, 'show'])->name('contabilidad.show');
+
+Route::delete('/contabilidad/{nombre_archivo}', [PdfContabilidadController::class, 'destroy'])->name('contabilidad.destroy');
+//Ruta del buscador
+Route::get('/contabilidad-busqueda', [PdfContabilidadController::class, 'busqueda'])->name('contabilidad.busqueda');
 
 
 
