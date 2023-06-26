@@ -1,0 +1,134 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+
+body {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+}
+
+.container2 {
+  text-align: center; /* Centra el contenido dentro del contenedor */
+  justify-content: center;
+  margin-top: 200px;
+}
+
+.general{
+  width: 900px;
+  height: 800px;
+  padding: 0px;
+  margin-top: 100px;
+  border-radius: 10px;
+}
+
+.general .search{
+  width: 40%;
+  float: left;
+  padding: 0;
+  margin: 0;
+  height: 80px;
+  text-align: left;
+}
+.general .search form{
+  width: 120%;
+}
+.general .search form button{
+  text-align: left;
+}
+
+.general .cargar{
+  width: 25%;
+  float: right;
+  padding: 0;
+  margin: 0;
+  margin-right: 5px;
+  height: 80px;
+}
+.general .cargar button{
+  float: right;
+  margin-top: 40px;
+  margin-right: 5px;
+  text-align: left;
+}
+.general .cargar button {
+  height: 35px;
+  text-indent: 25px;
+  border-radius: 10px;
+  width: 50%;
+  border: 2px solid #ffffff;
+  padding: 4px;
+  background-color: #318999;
+  caret-color: #000000;
+}
+
+.general .cargar button:hover {
+  box-shadow: none;
+  border: 3px solid #030303;
+  box-shadow: 0 0 5px #000000;
+  background-color: #ffffff;
+}
+
+.general .cargar button:focus {
+  box-shadow: none;
+  border: 5px solid #ffffff;
+  box-shadow: 0 0 10px #008080;
+}
+
+.general .table{
+  background-color: rgb(191, 75, 28);
+  padding: 0;
+  margin-top: 85px;
+  width: 100%;
+}
+
+/*estilos formulario*/
+
+
+.formulario {
+  margin-top: 150px;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+}
+
+.formulario h2 {
+  text-align: center;
+  color: #333;
+}
+
+.formulario label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.form__line {
+  display: block;
+  height: 1px;
+  background-color: #e6e6e6;
+  margin-bottom: 10px;
+}
+
+.formulario input[type="file"] {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formulario button[type="submit"] {
+  display: block;
+  background-color: #337ab7;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.formulario button[type="submit"]:hover {
+  background-color: #286090;
+}
+
+

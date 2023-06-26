@@ -11,19 +11,25 @@
 
 @section('content')
 
-
-    <div class="container">
+<div class="general">
+    <div class="search">
         <form action="{{ route('pdf.busqueda') }}" method="GET" class="search">        
             <input type="text" name="busqueda" id="texto" class="form-control" placeholder="Buscar un archivo">
             <input type="submit" value="Buscar"  class="btn btn-primary">
         </form>
     </div>
 
+    <div class="cargar">
+        <form action="{{ route('pdf.create') }}" method="GET">
+            <button type="submit" class="btn btn-danger">CARGAR</button>
+        </form>
+        </div>
+
     <div id="resultados" class="container">
         <!-- Aquí se mostrarán los resultados de la búsqueda -->
     </div>
 
-    <div class="container2">
+    <div class="table">
         <table id="table" name="table">
             <thead>
                 <tr>
@@ -46,7 +52,7 @@
                                 <form action="{{ route('pdf.destroy', $pdf->nombre_archivo) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -58,5 +64,6 @@
                 @endif
             </tbody>
         </table>
+    </div>
     </div>
 @endsection

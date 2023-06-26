@@ -2,6 +2,7 @@
     <div class="logo">
         <img src="{{ asset('img/aciel.png') }}" alt="logo_Aciel">
     </div>
+    <div class="btnheader">
     <nav>
         <a href="https://intranet.acielcolombia.com">
             <button>
@@ -29,4 +30,5 @@
             PRUEBA 2
         </button>
     </nav>
+    </div>
 </header>

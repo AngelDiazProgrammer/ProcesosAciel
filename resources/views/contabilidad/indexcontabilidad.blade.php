@@ -1,29 +1,28 @@
 @extends('layouts.plantilla')
 
-@section('styles')
-@push('styles')
 
+@push('styles')
 <link rel="stylesheet" href="{{ asset('css/tables.css') }}">
-<link rel="stylesheet" href="{{ asset('css/search.css') }}">
 @endpush
 @section('title', 'Index')
 @section('content')
 
-<div class="container">
+<div class="general">
+
+<div class="search">
     <form action="{{ route('contabilidad.busqueda') }}" method="GET" class="search">        
         <input type="text" name="busqueda" id="texto" class="form-control" placeholder="Buscar un archivo">
         <input type="submit" value="Buscar" class="btn btn-primary">
     </form>
 </div>
 
-    
-</div>
-<div class="container">
+<div class="cargar">
 <form action="{{ route('contabilidad.create') }}" method="GET">
-    <button type="submit" class="btn btn-danger">cargar nuevo archivo</button>
+    <button type="submit" class="btn btn-danger">CARGAR</button>
 </form>
 </div>
-<div class="container">
+
+<div class="table">
     <table>
         <thead>
             <tr>
@@ -43,7 +42,7 @@
                             <form action="{{ route('contabilidad.destroy', basename($pdf)) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>                        
+                                <button type="submit" class="btn btn-danger">Eliminar</button>                        
                             </form>
                         </td>
                     </tr>
@@ -56,6 +55,6 @@
         </tbody>
     </table>
 </div>
-
+</div>
 
 @endsection

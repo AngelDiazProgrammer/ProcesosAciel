@@ -11,20 +11,21 @@
 
 @section('content')
 
-<div class="container">
+<div class="general">
+<div class="search">
     <form action="{{ route('sistemas.busqueda') }}" method="GET" class="search">        
         <input type="text" name="busqueda" id="texto" class="form-control" placeholder="Buscar un archivo">
         <input type="submit" value="Buscar" class="btn btn-primary">
     </form>
 </div>
 
-<div class="container">
+<div class="cargar">
     <form action="{{ route('sistemas.create') }}" method="GET">
-        <button type="submit" class="btn btn-danger">Cargar nuevo archivo</button>
+        <button type="submit" class="btn btn-danger">CARGAR</button>
     </form>
 </div>
 
-<div class="container">
+<div class="table">
     <table>
         <thead>
             <tr>
@@ -50,7 +51,7 @@
                             <form action="{{ route('sistemas.destroy', basename($file)) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>                        
+                                <button type="submit" class="btn btn-danger">Eliminar</button>                        
                             </form>
                         </td>
                     </tr>
@@ -59,5 +60,5 @@
         </tbody>
     </table>
 </div>
-
+</div>
 @endsection

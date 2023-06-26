@@ -1,0 +1,154 @@
+.sidebar {
+    width: 200px;
+    height: 100vh; /* Cambia la altura a 100vh para ocupar toda la altura vertical */
+    background-color: #1fa1b3;
+    padding-left: 20px;
+    padding-top: 120px;
+    position: fixed; /* Cambia a posición fija para que se mantenga a la izquierda */
+    top: 0; /* Alinea la barra de navegación al inicio de la página */
+    left: 0; /* Alinea la barra de navegación a la izquierda */
+  }
+  
+  .navigation {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navigation li {
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 20PX;
+  }
+
+  
+  .navigation a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 0px;
+  }
+  
+  .sub-navigation {
+    margin-top: 10px;
+    margin-left: 20px;
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: .6s ease;
+  }
+  
+  .sub-navigation li {
+    margin-bottom: px;
+    transition: .6s;
+
+  }
+  .sidebar li:hover .sub-navigation {
+    display: block;
+    transition: .6s;
+    max-height: 200px; /* Ajusta la altura máxima según sea necesario */
+
+  }
+
+
+
+  /*Botones*/
+
+  .sidebar .navigation .btn {
+    position: relative;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    background: rgb(208, 248, 253);
+    color: #1fa1b3;
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 700;
+    transition: .7s;
+    overflow: hidden;
+    border-style: inset;
+    border-radius: 20px;
+    border-color: #1fa1b3;
+  }
+  
+  .sidebar .navigation .btn:hover {
+    background: #1fa1b3;
+    color: white;
+    font-style: italic;
+    font-weight: 700;
+    border-style: double;
+    border-color: white;
+    border-radius: 0;
+  }
+  
+  .sidebar .navigation .btn span {
+    position: absolute;
+    background: white;
+    transition: .7s;
+  }
+  
+  .sidebar .navigation .btn span:nth-child(1) {
+    width: 100%;
+    height: 1px;
+    top: 0;
+    left: -100%;
+  }
+  
+  .sidebar .navigation .btn span:nth-child(2) {
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    right: -100%;
+  }
+  
+  .sidebar .navigation .btn span:nth-child(3) {
+    width: 1px;
+    height: 100%;
+    bottom: -100%;
+    left: 0;
+  }
+  
+  .sidebar .navigation .btn span:nth-child(4) {
+    width: 1px;
+    height: 100%;
+    top: -100%;
+    right: 0;
+  }
+  
+  .sidebar .navigation .btn:hover span:nth-child(1) {
+    left: 0;
+  }
+  
+  .sidebar .navigation .btn:hover span:nth-child(2) {
+    right: 0;
+  }
+  
+  .sidebar .navigation .btn:hover span:nth-child(3) {
+    bottom: 0;
+  }
+  
+  .sidebar .navigation .btn:hover span:nth-child(4) {
+    top: 0;
+  }
+
+  /*estilo de letras*/
+  
+  .sidebar .navigation a {
+    /* Estilos de texto para los elementos <a> dentro de .navigation */
+    color: #000; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    text-decoration: none; /* Decoración de texto */
+    font-style: italic;
+    font-weight: 800;
+  }
+  
+  .sidebar .navigation a:hover {
+    /* Estilos de texto al pasar el cursor sobre los elementos <a> dentro de .navigation */
+    text-decoration: underline white; /* Subrayado al pasar el cursor */
+    color: azure;
+    transition: .6s;
+    font-style: italic;
+    font-weight: 800;
+  }

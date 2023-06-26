@@ -18,7 +18,7 @@ class PdfContabilidadController extends Controller
         return view('contabilidad.createcontabilidad');
     }
 
-    //recuperar y mostrar archivos
+
     public function index()
     {
         $contabilidadPath = public_path('storage/contabilidad');
@@ -26,7 +26,7 @@ class PdfContabilidadController extends Controller
     
         return view('contabilidad.indexcontabilidad', compact('pdfs'));
     }
-//cargar archivos 
+
 public function store(Request $request)
 {
     $request->validate([
@@ -38,7 +38,7 @@ public function store(Request $request)
         $pdf = new Pdf;
 
         if ($file) {
-            $fileName = $file->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $fileName = $file->getClientOriginalName(); 
             $filePath = $file->storeAs('contabilidad', $fileName, 'public');
             $pdf->nombre_archivo = $fileName;
             $pdf->ruta_archivo = '/storage/' . $filePath;
@@ -49,7 +49,7 @@ public function store(Request $request)
     return redirect()->route('contabilidad.index')->with('success', 'Archivo PDF subido exitosamente.');
 }
 
-//ver archivos 
+ 
 public function show($nombre_archivo)
 {
     $pdf = Pdf::findOrFail($nombre_archivo);
@@ -70,12 +70,11 @@ public function destroy($nombre_archivo)
 {
     
 
-    // Eliminar la entrada correspondiente en la base de datos
     $pdf = Pdf::where('nombre_archivo', $nombre_archivo)->first();
     if ($pdf) {
         $pdf->delete();
     }
-// Eliminar el archivo de la carpeta 'sistemas' en storage
+
     unlink(public_path('storage/contabilidad'.'/'. $pdf->nombre_archivo));
 
     return redirect()->route('contabilidad.index')->with('success', 'Archivo PDF eliminado exitosamente.');
@@ -86,18 +85,17 @@ public function busqueda(Request $request)
 {
     $keyword = $request->input('busqueda');
 
-    $directory = public_path('storage/contabilidad'); // Ruta completa a la subcarpeta "sistemas" dentro de "storage/app"
+    $directory = public_path('storage/contabilidad'); 
 
-    $files = File::allFiles($directory); // Obtener todos los archivos dentro de la carpeta
+    $files = File::allFiles($directory);
 
     $filteredFiles = collect($files)->filter(function ($file) use ($keyword) {
-        return str_contains($file->getFilename(), $keyword); // Filtrar los archivos que contengan la palabra clave en su nombre
+        return str_contains($file->getFilename(), $keyword); 
     });
 
-    // Obtener todos los archivos sin filtrar
+
     $allFiles = File::allFiles($directory);
 
-    // Puedes pasar tanto los archivos filtrados como los no filtrados a la vista
     return view('contabilidad.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
 }
 }

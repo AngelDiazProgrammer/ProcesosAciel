@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PdfSistemasController;
 use App\Http\Controllers\PdfContabilidadController;
+use App\Http\Controllers\CreadorController;
+use App\Http\Controllers\PdfgerenciaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +69,33 @@ Route::delete('/contabilidad/{nombre_archivo}', [PdfContabilidadController::clas
 Route::get('/contabilidad-busqueda', [PdfContabilidadController::class, 'busqueda'])->name('contabilidad.busqueda');
 
 
+Route::get('/creador-carpetas', [CreadorController::class, 'creador'])->name('creador.creador');
+Route::get('/creador-carpetas-crear', [CreadorController::class, 'generarVistasYControlador'])->name('creador.crear');
 
+ //rutas para Gerencia
+    
+    
+     //rutas para gerencia
+    
+  
+  //rutas para ecuador
+     //rutas para economia
+    
 
-
-
+    //rutas para gerencia
+    
+ //rutas para gerencia
+    
+    Route::get('/gerencia', [PdfgerenciaController::class, 'index'])->name('gerencia.index');
+    Route::get('/upload-gerencia', [PdfgerenciaController::class, 'create'])->name('gerencia.create');
+    Route::post('/upload-gerencia', [PdfgerenciaController::class, 'store'])->name('gerencia.store');
+    Route::get('storage/gerencia . /{nombre_archivo}', [PdfgerenciaController::class, 'show'])->name('gerencia.show');
+    Route::delete('/gerencia/{nombre_archivo}', [PdfgerenciaController::class, 'destroy'])->name('gerencia.destroy');
+    Route::get('/gerencia-busqueda', [PdfgerenciaController::class, 'busqueda'])->name('gerencia.busqueda'); //rutas para gerencia
+    
+    Route::get('/gerencia', [PdfgerenciaController::class, 'index'])->name('gerencia.index');
+    Route::get('/upload-gerencia', [PdfgerenciaController::class, 'create'])->name('gerencia.create');
+    Route::post('/upload-gerencia', [PdfgerenciaController::class, 'store'])->name('gerencia.store');
+    Route::get('storage/gerencia . /{nombre_archivo}', [PdfgerenciaController::class, 'show'])->name('gerencia.show');
+    Route::delete('/gerencia/{nombre_archivo}', [PdfgerenciaController::class, 'destroy'])->name('gerencia.destroy');
+    Route::get('/gerencia-busqueda', [PdfgerenciaController::class, 'busqueda'])->name('gerencia.busqueda');
