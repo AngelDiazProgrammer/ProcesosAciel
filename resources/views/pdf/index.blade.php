@@ -12,6 +12,8 @@
 @section('content')
 
 <div class="general">
+    
+
     <div class="search">
         <form action="{{ route('pdf.busqueda') }}" method="GET" class="search">        
             <input type="text" name="busqueda" id="texto" class="form-control" placeholder="Buscar un archivo">
@@ -21,7 +23,7 @@
 
     <div class="cargar">
         <form action="{{ route('pdf.create') }}" method="GET">
-            <button type="submit" class="btn btn-danger">CARGAR</button>
+            <button type="submit" class="btn btn-danger">cargar</button>
         </form>
         </div>
 
@@ -65,5 +67,12 @@
             </tbody>
         </table>
     </div>
-    </div>
+</div>
+    <div class="validation">
+        @if(Session::has('success'))
+          <div class="validation-message">
+            {{ Session::get('success') }}
+          </div>
+        @endif
+      </div>
 @endsection

@@ -56,5 +56,12 @@
     </table>
 </div>
 </div>
+<div class="validation">
+    @if(Session::has('success'))
+      <div class="validation-message">
+        {{ Session::get('success') }}
+      </div>
+    @endif
+  </div>
 
 @endsection

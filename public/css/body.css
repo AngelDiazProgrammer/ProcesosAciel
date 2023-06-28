@@ -6,6 +6,8 @@ body {
   display: flex;
   justify-content: center; /* Centra horizontalmente */
   align-items: center;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .container2 {
@@ -15,11 +17,15 @@ body {
 }
 
 .general{
-  width: 900px;
+  width: 850px;
   height: 800px;
   padding: 0px;
   margin-top: 100px;
+  margin-left: 200px;
   border-radius: 10px;
+  font-style: italic;
+  font-weight: 500; 
+
 }
 
 .general .search{
@@ -52,21 +58,24 @@ body {
   text-align: left;
 }
 .general .cargar button {
-  height: 35px;
-  text-indent: 25px;
+  /* height: 35px; */
   border-radius: 10px;
-  width: 50%;
+  text-align: center;
+  /* width: 50%; */
   border: 2px solid #ffffff;
-  padding: 4px;
-  background-color: #318999;
+  padding: 7px 10px;
+  background-color: #198694;
   caret-color: #000000;
+ text-transform: capitalize;
+  font-weight: 500;
+  font-style: italic;
+
 }
 
 .general .cargar button:hover {
   box-shadow: none;
-  border: 3px solid #030303;
   box-shadow: 0 0 5px #000000;
-  background-color: #ffffff;
+  background-color: #198694;
 }
 
 .general .cargar button:focus {
@@ -86,12 +95,13 @@ body {
 
 
 .formulario {
-  margin-top: 150px;
+  margin-top: 120px;
   max-width: 500px;
-  padding: 20px;
+  padding: 0px;
   background-color: #f9f9f9;
   border: 1px solid #e6e6e6;
-  border-radius: 5px;
+  border-radius: 7px;
+  box-shadow: 4px  #008080;
 }
 
 .formulario h2 {
@@ -101,7 +111,7 @@ body {
 
 .formulario label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
@@ -109,12 +119,12 @@ body {
   display: block;
   height: 1px;
   background-color: #e6e6e6;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .formulario input[type="file"] {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .formulario button[type="submit"] {
@@ -125,10 +135,54 @@ body {
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .formulario button[type="submit"]:hover {
   background-color: #286090;
+
 }
+
+.validation-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 10px;
+  animation: fadeOut 4s ease-in-out forwards;
+}
+
+.validation {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.validation-message.error {
+  background-color: red;
+  color: white;
+  animation: fadeOut 4s ease-in-out forwards;
+}
+
+.validation-message small {
+  color: white;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 
 

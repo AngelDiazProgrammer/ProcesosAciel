@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -9,55 +10,28 @@ use Illuminate\Support\Facades\Route;
 
 class CreadorController extends Controller
 {
-    public function creador()
-    {
+  public function creador()
+  {
     return view('creador');
-    }
-public function generarVistasYControlador(Request $request)
-{
+  }
+  public function generarVistasYControlador(Request $request)
+  {
     $nombreParametro = $request->get('nombreParametro');
 
     // Nombre de las vistas
     $nombreIndex = 'index' . $nombreParametro . '.blade.php';
     $nombreCreate = 'create' . $nombreParametro . '.blade.php';
-    $nombreResultados = 'resultados' . '.blade.php';
-
-    // Contenido de las vistas
-
-
-    $rutaArchivo = resource_path('views/layouts/navbar.blade.php');
-
-    // Código HTML que deseas agregar
-    $codigoHtml = "
-      <li>
-        <a>$nombreParametro</a>
-        <ul class='sub-navigation'>
-          <form action='{{ route('$nombreParametro.index') }}' method='GET'>
-            <button type='submit' class='btn btn-danger'>PDFs</button>
-          </form>
-        </ul>
-      </li>";
-    
-    // Leer el contenido actual del archivo
-    $contenidoActual = file_get_contents($rutaArchivo);
-    
-    // Encontrar el punto de inserción (el div) en el contenido actual
-    $puntoInsercion = strpos($contenidoActual, '</ul></div>');
-    
-    // Insertar el código HTML antes del punto de inserción
-    if ($puntoInsercion !== false) {
-        $contenidoActual = substr_replace($contenidoActual, $codigoHtml, $puntoInsercion, 0);
-    }
-    
-    // Escribir el contenido actualizado en el archivo
-    file_put_contents($rutaArchivo, $contenidoActual);
-    
+    $nombreResultados = 'resultados' . '.blade.php'; // Contenido de las vistas
 
 
 
 
-    
-    
+
+
+
+
+
+
 
 
     $contenidoIndex = "@extends('layouts.plantilla')
@@ -119,14 +93,21 @@ public function generarVistasYControlador(Request $request)
         </table>
       </div>
     </div>
-    @endsection" ;
+    <div class='validation'>
+    @if(Session::has('success'))
+      <div class='validation-message'>
+        {{ Session::get('success') }}
+      </div>
+    @endif
+  </div>
+    @endsection";
 
     $contenidoCreate = "@extends('layouts.plantilla')
- 
+
     @section('title', 'Index')
     
     @push('styles')
-    <link rel='stylesheet' href='{{ asset('css/formulario.css') }}'>
+    <link rel='stylesheet' href='{{ asset('css/tables.css') }}'>
     @endpush
     
     @section('content')
@@ -137,6 +118,13 @@ public function generarVistasYControlador(Request $request)
           @csrf
           <div>
             <label for='pdf'>Seleccionar archivo PDF:</label>
+            <div class='validation'>
+              @error('pdf')
+              <div class='validation-message error'>
+                <small>*{{ \$message }}</small>
+              </div>
+              @enderror
+            </div>
             <input type='file' name='pdf[]' accept='application/pdf' id='pdf' multiple>
           </div>
           <div>
@@ -145,9 +133,11 @@ public function generarVistasYControlador(Request $request)
         </form>
       </div>
     </div>
-    @endsection";
+    
+    @endsection
+    ";
 
-    $contenidoResultados ="@extends('layouts.plantilla')
+    $contenidoResultados = "@extends('layouts.plantilla')
 
     @push('styles')
     <link rel='stylesheet' href='{{ asset('css/tables.css') }}'>
@@ -206,19 +196,19 @@ public function generarVistasYControlador(Request $request)
         </table>
       </div>
     </div>
-    @endsection" ;
+    @endsection";
 
 
-        $carpetaS = public_path('storage/' . $nombreParametro);
-        if (!File::exists($carpetaS)) {
-            File::makeDirectory($carpetaS);
-        }
+    $carpetaS = public_path('storage/' . $nombreParametro);
+    if (!File::exists($carpetaS)) {
+      File::makeDirectory($carpetaS);
+    }
 
 
-$carpeta = resource_path('views/' . $nombreParametro);
-if (!File::exists($carpeta)) {
-    File::makeDirectory($carpeta);
-}
+    $carpeta = resource_path('views/' . $nombreParametro);
+    if (!File::exists($carpeta)) {
+      File::makeDirectory($carpeta);
+    }
     // Rutas de almacenamiento
     $rutaIndex = resource_path('views/' . $nombreParametro . '/' . $nombreIndex);
     $rutaCreate = resource_path('views/' . $nombreParametro . '/' . $nombreCreate);
@@ -231,9 +221,12 @@ if (!File::exists($carpeta)) {
     File::put($rutaCreate, $contenidoCreate);
     File::put($rutaResultados, $contenidoResultados);
 
-   // Crear el controlador
-$nombreControlador = 'Pdf' . $nombreParametro . 'Controller';
-$contenidoControlador = "<?php
+
+
+
+    // Crear el controlador
+    $nombreControlador = 'Pdf' . $nombreParametro . 'Controller';
+    $contenidoControlador = "<?php
 
 namespace App\Http\Controllers;
 
@@ -338,10 +331,12 @@ class $nombreControlador extends Controller
     $rutaControlador = app_path('Http/Controllers/' . $nombreControlador . '.php');
     File::put($rutaControlador, $contenidoControlador);
 
-    
+
     //crear rutas
-  
+
     $rutasGeneradas = " //rutas para $nombreParametro
+
+    use App\Http\Controllers\\$nombreControlador;
     
     Route::get('/$nombreParametro', [$nombreControlador::class, 'index'])->name('$nombreParametro.index');
     Route::get('/upload-$nombreParametro', [$nombreControlador::class, 'create'])->name('$nombreParametro.create');
@@ -354,20 +349,43 @@ class $nombreControlador extends Controller
     $rutaArchivoWeb = base_path('routes/web.php');
 
     // Agregar las rutas al archivo web.php
+    // Al menos una de las rutas no existe, por lo tanto, agregar las rutas al archivo web.php
     file_put_contents($rutaArchivoWeb, $rutasGeneradas, FILE_APPEND | LOCK_EX);
 
 
-    
-    
-    
-    
+
+    $rutaArchivo = resource_path('views/layouts/navbar.blade.php');
+
+    // Código HTML que deseas agregar
+    $codigoHtml = "
+    <li>
+    <a class='icon-container'>
+        <i class='fas fa-folder-open'></i>
+        $nombreParametro
+    </a>
+    <ul class='sub-navigation'>
+        <form action='{{ route('$nombreParametro.index') }}' method='GET'>
+            <button type='submit' class='btn btn-danger'>PDFs</button>
+        </form>
+    </ul>
+</li>";
+
+    // Leer el contenido actual del archivo
+    $contenidoActual = file_get_contents($rutaArchivo);
+
+    // Encontrar el punto de inserción (el div) en el contenido actual
+    $puntoInsercion = strpos($contenidoActual, '</ul></aside>');
+
+    // Insertar el código HTML antes del punto de inserción
+    if ($puntoInsercion !== false) {
+      $contenidoActual = substr_replace($contenidoActual, $codigoHtml, $puntoInsercion, 0);
+    }
+
+    // Escribir el contenido actualizado en el archivo
+    file_put_contents($rutaArchivo, $contenidoActual);
+
+
     // Mensaje de éxito
-   return "Las vistas, el controlador y las rutas para '$nombreParametro' han sido generadas exitosamente.";
-
-
-
-}
-
-
-
+    return redirect()->route('pdf.index')->with('success', 'Carpeta creada con exito');
+  }
 }

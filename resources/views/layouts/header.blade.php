@@ -22,13 +22,6 @@
                 INICIO
             </button>
         </a>
-        <button>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            PRUEBA 2
-        </button>
     </nav>
     </div>
 </header>

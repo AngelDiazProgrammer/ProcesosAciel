@@ -10,21 +10,21 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 
-class PdfgerenciaController extends Controller
+class PdfJoseController extends Controller
 {
     // Métodos del controlador
 
     public function create()
     {
-        return view('gerencia.creategerencia');
+        return view('Jose.createJose');
     }
 
     public function index()
     {
-        $nombreParametroPath = public_path('storage/gerencia');
+        $nombreParametroPath = public_path('storage/Jose');
         $pdfs = File::files($nombreParametroPath);
 
-        return view('gerencia.indexgerencia', compact('pdfs'));
+        return view('Jose.indexJose', compact('pdfs'));
     }
 
     public function store(Request $request)
@@ -39,14 +39,14 @@ class PdfgerenciaController extends Controller
 
             if ($file) {
                 $fileName = $file->getClientOriginalName();
-                $filePath = $file->storeAs('gerencia', $fileName, 'public');
+                $filePath = $file->storeAs('Jose', $fileName, 'public');
                 $pdf->nombre_archivo = $fileName;
                 $pdf->ruta_archivo = '/storage/' . $filePath;
                 $pdf->save();
             }
         }
 
-        return redirect()->route('gerencia.index')->with('success', 'Archivo PDF subido exitosamente.');
+        return redirect()->route('Jose.index')->with('success', 'Archivo PDF subido exitosamente.');
     }
 
     public function show($nombre_archivo)
@@ -61,7 +61,7 @@ class PdfgerenciaController extends Controller
 
         $pdfUrl = Storage::url($pdfPath);
 
-        return view('gerencia.show', compact('pdfUrl'));
+        return view('Jose.show', compact('pdfUrl'));
     }
 
     public function destroy($nombre_archivo)
@@ -71,16 +71,16 @@ class PdfgerenciaController extends Controller
             $pdf->delete();
         }
 
-        unlink(public_path('storage/gerencia'.'/'. $pdf->nombre_archivo));
+        unlink(public_path('storage/Jose'.'/'. $pdf->nombre_archivo));
 
-        return redirect()->route('gerencia.index')->with('success', 'Archivo PDF eliminado exitosamente.');
+        return redirect()->route('Jose.index')->with('success', 'Archivo PDF eliminado exitosamente.');
     }
 
     public function busqueda(Request $request)
     {
         $keyword = $request->input('busqueda');
 
-        $directory = public_path('storage/gerencia');
+        $directory = public_path('storage/Jose');
 
         $files = File::allFiles($directory);
 
@@ -90,7 +90,7 @@ class PdfgerenciaController extends Controller
 
         $allFiles = File::allFiles($directory);
 
-        return view('gerencia.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
+        return view('Jose.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
     }
 
     // Agrega tus propios métodos aquí

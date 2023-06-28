@@ -9,14 +9,14 @@
     @section('content')
     <div class='general'>
       <div class='search'>
-      <form action='{{ route('gerencia.busqueda') }}' method='GET' class='search'>
+      <form action='{{ route('Jose.busqueda') }}' method='GET' class='search'>
           <input type='text' name='busqueda' id='texto' class='form-control' placeholder='Buscar un archivo'>
           <input type='submit' value='Buscar' class='btn btn-primary'>
         </form>
       </div>
     
       <div class='cargar'>
-        <form action='{{ route('gerencia.create') }}' method='GET'>
+        <form action='{{ route('Jose.create') }}' method='GET'>
           <button type='submit' class='btn btn-danger'>CARGAR</button>
         </form>
       </div>
@@ -37,10 +37,10 @@
               <td>{{ $loop->index + 1 }}</td>
               <td>{{ basename($pdf) }}</td>
               <td>
-              <a href='{{ route('gerencia.show', basename($pdf)) }}' target='_blank'>
+              <a href='{{ route('Jose.show', basename($pdf)) }}' target='_blank'>
                   <button class='btn btn-info'>Abrir</button>
                 </a>
-                <form action='{{ route('gerencia.destroy', basename($pdf)) }}' method='POST'>
+                <form action='{{ route('Jose.destroy', basename($pdf)) }}' method='POST'>
                   @method('DELETE')
                   @csrf
                   <button type='submit' class='btn btn-danger'>Eliminar</button>
@@ -57,4 +57,11 @@
         </table>
       </div>
     </div>
+    <div class='validation'>
+    @if(Session::has('success'))
+      <div class='validation-message'>
+        {{ Session::get('success') }}
+      </div>
+    @endif
+  </div>
     @endsection

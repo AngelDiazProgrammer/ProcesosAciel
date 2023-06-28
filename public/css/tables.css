@@ -3,7 +3,7 @@ div{
 }
 
 div table {
-  font-family: sans-serif;
+    color: aliceblue;
 }
 
 table {
@@ -16,7 +16,6 @@ table {
   justify-content: center;
   align-items: center;
 }
-
 thead {
   background-color: #198694;
 }

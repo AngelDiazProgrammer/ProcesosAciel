@@ -1,11 +1,12 @@
 <?php
-
+//punto rutas
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PdfSistemasController;
 use App\Http\Controllers\PdfContabilidadController;
 use App\Http\Controllers\CreadorController;
-use App\Http\Controllers\PdfgerenciaController;
+
+
 
 
 /*
@@ -71,31 +72,23 @@ Route::get('/contabilidad-busqueda', [PdfContabilidadController::class, 'busqued
 
 Route::get('/creador-carpetas', [CreadorController::class, 'creador'])->name('creador.creador');
 Route::get('/creador-carpetas-crear', [CreadorController::class, 'generarVistasYControlador'])->name('creador.crear');
+ 
+ //rutas para Procesos
 
- //rutas para Gerencia
+    use App\Http\Controllers\PdfProcesosController;
     
-    
-     //rutas para gerencia
-    
-  
-  //rutas para ecuador
-     //rutas para economia
-    
+    Route::get('/Procesos', [PdfProcesosController::class, 'index'])->name('Procesos.index');
+    Route::get('/upload-Procesos', [PdfProcesosController::class, 'create'])->name('Procesos.create');
+    Route::post('/upload-Procesos', [PdfProcesosController::class, 'store'])->name('Procesos.store');
+    Route::get('storage/Procesos . /{nombre_archivo}', [PdfProcesosController::class, 'show'])->name('Procesos.show');
+    Route::delete('/Procesos/{nombre_archivo}', [PdfProcesosController::class, 'destroy'])->name('Procesos.destroy');
+    Route::get('/Procesos-busqueda', [PdfProcesosController::class, 'busqueda'])->name('Procesos.busqueda'); //rutas para Jose
 
-    //rutas para gerencia
+    use App\Http\Controllers\PdfJoseController;
     
- //rutas para gerencia
-    
-    Route::get('/gerencia', [PdfgerenciaController::class, 'index'])->name('gerencia.index');
-    Route::get('/upload-gerencia', [PdfgerenciaController::class, 'create'])->name('gerencia.create');
-    Route::post('/upload-gerencia', [PdfgerenciaController::class, 'store'])->name('gerencia.store');
-    Route::get('storage/gerencia . /{nombre_archivo}', [PdfgerenciaController::class, 'show'])->name('gerencia.show');
-    Route::delete('/gerencia/{nombre_archivo}', [PdfgerenciaController::class, 'destroy'])->name('gerencia.destroy');
-    Route::get('/gerencia-busqueda', [PdfgerenciaController::class, 'busqueda'])->name('gerencia.busqueda'); //rutas para gerencia
-    
-    Route::get('/gerencia', [PdfgerenciaController::class, 'index'])->name('gerencia.index');
-    Route::get('/upload-gerencia', [PdfgerenciaController::class, 'create'])->name('gerencia.create');
-    Route::post('/upload-gerencia', [PdfgerenciaController::class, 'store'])->name('gerencia.store');
-    Route::get('storage/gerencia . /{nombre_archivo}', [PdfgerenciaController::class, 'show'])->name('gerencia.show');
-    Route::delete('/gerencia/{nombre_archivo}', [PdfgerenciaController::class, 'destroy'])->name('gerencia.destroy');
-    Route::get('/gerencia-busqueda', [PdfgerenciaController::class, 'busqueda'])->name('gerencia.busqueda');
+    Route::get('/Jose', [PdfJoseController::class, 'index'])->name('Jose.index');
+    Route::get('/upload-Jose', [PdfJoseController::class, 'create'])->name('Jose.create');
+    Route::post('/upload-Jose', [PdfJoseController::class, 'store'])->name('Jose.store');
+    Route::get('storage/Jose . /{nombre_archivo}', [PdfJoseController::class, 'show'])->name('Jose.show');
+    Route::delete('/Jose/{nombre_archivo}', [PdfJoseController::class, 'destroy'])->name('Jose.destroy');
+    Route::get('/Jose-busqueda', [PdfJoseController::class, 'busqueda'])->name('Jose.busqueda');

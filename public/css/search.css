@@ -1,31 +1,26 @@
  
   .search input {
-    height: 35px;
-    text-indent: 25px;
     border-radius: 10px;
     width: 50%;
-    border: 2px solid #ffffff;
+    border: 1px solid transparent;
     padding: 4px;
     background-color: #318999;
     caret-color: #000000;
+    transition: .4s all ease;
+    font-style: italic;
+    font-weight: 500;
   }
   
   .search input:hover {
-    box-shadow: none;
-    border: 3px solid #030303;
-    box-shadow: 0 0 5px #000000;
-    background-color: #fffefe;
+    background-color: #ffffff;
+    color: #318999;
+    border: 1px solid #318999 ;
+
   }
   
   .search input:focus {
     box-shadow: none;
     border: 5px solid #ffffff;
     box-shadow: 0 0 10px #008080;
-  }
-  
-  .icon {
-    color: #ffff;
-    border: none;
-    padding-right: 0;
   }
   

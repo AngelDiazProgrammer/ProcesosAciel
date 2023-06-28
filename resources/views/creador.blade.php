@@ -6,16 +6,17 @@
 @section('content')
 
 <div class="formulario">
-  <h2>Carga de archivos</h2>
+  <h2>Crear Carpeta</h2>
+
   <div class="formulario">
 
     <form action="{{ route('creador.crear') }}" method="GET">
         @csrf
-        <label for="nombreParametro">Ingrese el parámetro:</label>
-        <input type="text" name="nombreParametro" id="nombreParametro">
-        <button type="submit">Generar vistas y controlador</button>
+        <label for="nombreParametro">Ingrese el nombre de la carpeta:</label>
+        <input type="text" name="nombreParametro" id="nombreParametro"> <br>
+        <button type="submit">Generar Carpeta</button>
       </form>
-</div>
+    </div>
 </div>
   @endsection
   

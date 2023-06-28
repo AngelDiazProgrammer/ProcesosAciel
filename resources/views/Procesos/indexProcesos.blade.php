@@ -9,14 +9,14 @@
     @section('content')
     <div class='general'>
       <div class='search'>
-        <form action='{{ route('gerencia.busqueda') }}' method='GET' class='search'>        
+      <form action='{{ route('Procesos.busqueda') }}' method='GET' class='search'>
           <input type='text' name='busqueda' id='texto' class='form-control' placeholder='Buscar un archivo'>
           <input type='submit' value='Buscar' class='btn btn-primary'>
         </form>
       </div>
     
       <div class='cargar'>
-        <form action='{{ route('gerencia.create') }}' method='GET'>
+        <form action='{{ route('Procesos.create') }}' method='GET'>
           <button type='submit' class='btn btn-danger'>CARGAR</button>
         </form>
       </div>
@@ -31,20 +31,16 @@
             </tr>
           </thead>
           <tbody>
-            @if ($filteredFiles->isEmpty())
-            <tr>
-              <td colspan='3'>No se encontraron archivos.</td>
-            </tr>
-            @else
-            @foreach ($filteredFiles as $file)
+            @if (!empty($pdfs))
+            @foreach ($pdfs as $pdf)
             <tr>
               <td>{{ $loop->index + 1 }}</td>
-              <td>{{ $file->getFilename() }}</td>
+              <td>{{ basename($pdf) }}</td>
               <td>
-                <a href='{{ route('gerencia.show', basename($file)) }}' target='_blank'>
+              <a href='{{ route('Procesos.show', basename($pdf)) }}' target='_blank'>
                   <button class='btn btn-info'>Abrir</button>
                 </a>
-                <form action='{{ route('sistemas.destroy', basename($file)) }}' method='POST'>
+                <form action='{{ route('Procesos.destroy', basename($pdf)) }}' method='POST'>
                   @method('DELETE')
                   @csrf
                   <button type='submit' class='btn btn-danger'>Eliminar</button>
@@ -52,9 +48,20 @@
               </td>
             </tr>
             @endforeach
+            @else
+            <tr>
+              <td colspan='3'>No se encontraron PDFs</td>
+            </tr>
             @endif
           </tbody>
         </table>
       </div>
     </div>
+    <div class='validation'>
+    @if(Session::has('success'))
+      <div class='validation-message'>
+        {{ Session::get('success') }}
+      </div>
+    @endif
+  </div>
     @endsection

@@ -32,6 +32,8 @@ public function store(Request $request)
         'pdf' => 'required|array',
         'pdf.*' => 'required|mimes:pdf|max:10240',
     ]);
+// Después de realizar la validación
+
 
     foreach ($request->file('pdf') as $file) {
         $pdf = new Pdf;
