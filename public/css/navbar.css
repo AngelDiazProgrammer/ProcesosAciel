@@ -1,7 +1,3 @@
-
-
-
-
 .sidebar {
     width: 200px;
     height: 100vh; /* Cambia la altura a 100vh para ocupar toda la altura vertical */
@@ -11,6 +7,8 @@
     position: fixed; /* Cambia a posición fija para que se mantenga a la izquierda */
     top: 0; /* Alinea la barra de navegación al inicio de la página */
     left: 0; /* Alinea la barra de navegación a la izquierda */
+    z-index: 1;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
   }
   
   .navigation {
@@ -87,5 +85,26 @@
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 20px;
+      position: static;
+    }
+  
+    .sidebar .navigation {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .sidebar .navigation li {
+      width: 50%;
+      margin-bottom: 10px;
+    }
   }
 

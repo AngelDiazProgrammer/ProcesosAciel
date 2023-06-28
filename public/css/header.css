@@ -1,6 +1,6 @@
 header {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   min-height: 60px;
   background-color: #1fa1b3;
   align-items: center;
@@ -8,12 +8,15 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 2;
 }
+
 
 .logo {
   display: flex;
   align-items: center;
   width: 20%;
+  margin-left: 20px;
 }
 
 .logo img {
@@ -22,17 +25,16 @@ header {
 }
 
 header .btnheader {
-
+  
+  justify-content: space-between;
   float: right;
   width: 28%;
+  right: -100px;
 }
 
 
 header button {
   position: relative;
-  padding: 10px 15px;
-  border: none;
-  outline: none;
   background: rgb(208, 248, 253);
   color: #1fa1b3;
   cursor: pointer;
@@ -40,9 +42,9 @@ header button {
   font-weight: 700;
   transition: .7s;
   overflow: hidden;
-  border-style: inset;
-  border-radius: 20px;
   border-color: #1fa1b3;
+  margin-left: 20px;
+  border: white;
 }
 
 header button:hover {
@@ -109,9 +111,18 @@ header button:hover span:nth-child(4) {
 @media (max-width: 700px) {
   header {
     flex-direction: column;
+    height: auto;
   }
 
-  nav {
-    padding: 10px 0px;
+  .logo {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  header .btnheader {
+    float: none;
+    width: 100%;
+    text-align: center;
   }
 }

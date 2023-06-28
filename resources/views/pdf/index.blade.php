@@ -2,7 +2,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/tables.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/search.css') }}">
+
     
 @endpush
 
@@ -14,9 +14,9 @@
 <div class="general">
     
 
-    <div class="search">
+    <div class="">
         <form action="{{ route('pdf.busqueda') }}" method="GET" class="search">        
-            <input type="text" name="busqueda" id="texto" class="form-control" placeholder="Buscar un archivo">
+            <input type="text" name="busqueda" class="form-control" placeholder="Buscar un archivo">
             <input type="submit" value="Buscar"  class="btn btn-primary">
         </form>
     </div>

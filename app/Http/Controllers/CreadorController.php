@@ -44,7 +44,7 @@ class CreadorController extends Controller
     
     @section('content')
     <div class='general'>
-      <div class='search'>
+      <div class=''>
       <form action='{{ route('$nombreParametro.busqueda') }}' method='GET' class='search'>
           <input type='text' name='busqueda' id='texto' class='form-control' placeholder='Buscar un archivo'>
           <input type='submit' value='Buscar' class='btn btn-primary'>
@@ -358,16 +358,11 @@ class $nombreControlador extends Controller
 
     // Código HTML que deseas agregar
     $codigoHtml = "
-    <li>
-    <a class='icon-container'>
+<li>
+    <a class='icon-container' href='{{ route('$nombreParametro.index') }}'>
         <i class='fas fa-folder-open'></i>
         $nombreParametro
-    </a>
-    <ul class='sub-navigation'>
-        <form action='{{ route('$nombreParametro.index') }}' method='GET'>
-            <button type='submit' class='btn btn-danger'>PDFs</button>
-        </form>
-    </ul>
+        </a>
 </li>";
 
     // Leer el contenido actual del archivo

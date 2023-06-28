@@ -3,21 +3,22 @@ div{
 }
 
 div table {
-    color: aliceblue;
+    color: #ffff;
 }
 
 table {
   font-size: 17px;
   table-layout: fixed;
   border-collapse: collapse;
-  background-color: #32bcce;
+  background-color: #1fa1b3;
   width: 100%;
   margin: auto;
   justify-content: center;
   align-items: center;
+  
 }
 thead {
-  background-color: #198694;
+  background-color: #1fa1b3;
 }
 
 th {

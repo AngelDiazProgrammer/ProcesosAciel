@@ -2,116 +2,97 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pdf;
 use Illuminate\Http\Request;
+use App\Models\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 
-class PdfSistemasController extends Controller
+class PdfsistemasController extends Controller
 {
-    //
+    // Métodos del controlador
+
     public function create()
     {
         return view('sistemas.createsistemas');
     }
 
-    //recuperar y mostrar archivos
     public function index()
     {
-        $sistemasPath = public_path('storage/sistemas');
-        $pdfs = File::files($sistemasPath);
-    
+        $nombreParametroPath = public_path('storage/sistemas');
+        $pdfs = File::files($nombreParametroPath);
+
         return view('sistemas.indexsistemas', compact('pdfs'));
     }
 
-//cargar archivos 
-public function store(Request $request)
-{
-    $request->validate([
-        'pdf' => 'required|array',
-        'pdf.*' => 'required|mimes:pdf|max:10240',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'pdf' => 'required|array',
+            'pdf.*' => 'required|mimes:pdf|max:10240',
+        ]);
 
-    foreach ($request->file('pdf') as $file) {
-        $pdf = new Pdf;
+        foreach ($request->file('pdf') as $file) {
+            $pdf = new Pdf;
 
-        if ($file) {
-            $fileName = $file->getClientOriginalName(); // Obtiene el nombre original del archivo
-            $filePath = $file->storeAs('sistemas', $fileName, 'public');
-            $pdf->nombre_archivo = $fileName;
-            $pdf->ruta_archivo = '/storage/' . $filePath;
-            $pdf->save();
+            if ($file) {
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('sistemas', $fileName, 'public');
+                $pdf->nombre_archivo = $fileName;
+                $pdf->ruta_archivo = '/storage/' . $filePath;
+                $pdf->save();
+            }
         }
+
+        return redirect()->route('sistemas.index')->with('success', 'Archivo PDF subido exitosamente.');
     }
 
-    return redirect()->route('sistemas.index')->with('success', 'Archivo PDF subido exitosamente.');
-}
+    public function show($nombre_archivo)
+    {
+        $pdf = Pdf::findOrFail($nombre_archivo);
 
-//ver archivos 
-public function show($nombre_archivo)
-{
-    $pdf = Pdf::findOrFail($nombre_archivo);
+        $pdfPath = $pdf->nombre_archivo;
 
-    $pdfPath = $pdf->nombre_archivo;
-    
+        if (!Storage::disk('public')->exists($pdfPath)) {
+            abort(404);
+        }
 
-    if (!Storage::disk('public')->exists($pdfPath)) {
-        abort(404);
+        $pdfUrl = Storage::url($pdfPath);
+
+        return view('sistemas.show', compact('pdfUrl'));
     }
 
-    $pdf = Storage::url($pdfPath);
+    public function destroy($nombre_archivo)
+    {
+        $pdf = Pdf::where('nombre_archivo', $nombre_archivo)->first();
+        if ($pdf) {
+            $pdf->delete();
+        }
 
-    return view('sistemas.show', compact('pdfUrl'));
-}
+        unlink(public_path('storage/sistemas'.'/'. $pdf->nombre_archivo));
 
-public function destroy($nombre_archivo)
-{
-    
-
-    // Eliminar la entrada correspondiente en la base de datos
-    $pdf = Pdf::where('nombre_archivo', $nombre_archivo)->first();
-    if ($pdf) {
-        $pdf->delete();
+        return redirect()->route('sistemas.index')->with('success', 'Archivo PDF eliminado exitosamente.');
     }
-// Eliminar el archivo de la carpeta 'sistemas' en storage
-    unlink(public_path('storage/sistemas'.'/'. $pdf->nombre_archivo));
 
-    return redirect()->route('sistemas.index')->with('success', 'Archivo PDF eliminado exitosamente.');
-}
+    public function busqueda(Request $request)
+    {
+        $keyword = $request->input('busqueda');
 
+        $directory = public_path('storage/sistemas');
 
-public function busqueda(Request $request)
-{
-    $keyword = $request->input('busqueda');
+        $files = File::allFiles($directory);
 
-    $directory = public_path('storage/sistemas'); // Ruta completa a la subcarpeta "sistemas" dentro de "storage/app"
+        $filteredFiles = collect($files)->filter(function ($file) use ($keyword) {
+            return str_contains($file->getFilename(), $keyword);
+        });
 
-    $files = File::allFiles($directory); // Obtener todos los archivos dentro de la carpeta
+        $allFiles = File::allFiles($directory);
 
-    $filteredFiles = collect($files)->filter(function ($file) use ($keyword) {
-        return str_contains($file->getFilename(), $keyword); // Filtrar los archivos que contengan la palabra clave en su nombre
-    });
+        return view('sistemas.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
+    }
 
-    // Obtener todos los archivos sin filtrar
-    $allFiles = File::allFiles($directory);
-
-    // Puedes pasar tanto los archivos filtrados como los no filtrados a la vista
-    return view('sistemas.resultados', compact('filteredFiles', 'allFiles', 'keyword'));
-}
-
-
-
-
-
-
-
-
+    // Agrega tus propios métodos aquí
 
 }
-
-
-
-
