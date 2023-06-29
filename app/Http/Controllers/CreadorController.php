@@ -383,4 +383,60 @@ class $nombreControlador extends Controller
     // Mensaje de éxito
     return redirect()->route('pdf.index')->with('success', 'Carpeta creada con exito');
   }
+
+  public function eliminarCarpeta(Request $request)
+{
+    $nombreParametro = $request->get('nombreParametro');
+
+    // Eliminar carpeta de almacenamiento de archivos PDF
+    $carpetaS = public_path('storage/' . $nombreParametro);
+    if (File::exists($carpetaS)) {
+        File::deleteDirectory($carpetaS);
+    }
+
+    // Eliminar carpeta de vistas
+    $carpeta = resource_path('views/' . $nombreParametro);
+    if (File::exists($carpeta)) {
+        File::deleteDirectory($carpeta);
+    }
+
+    // Eliminar controlador
+    $nombreControlador = 'Pdf' . $nombreParametro . 'Controller';
+    $rutaControlador = app_path('Http/Controllers/' . $nombreControlador . '.php');
+    if (File::exists($rutaControlador)) {
+        File::delete($rutaControlador);
+    }
+
+    // Eliminar rutas generadas
+    $rutasGeneradas = "
+    // Rutas para $nombreParametro
+    use App\Http\Controllers\\$nombreControlador;
+
+    Route::get('/$nombreParametro', [$nombreControlador::class, 'index'])->name('$nombreParametro.index');
+    Route::get('/upload-$nombreParametro', [$nombreControlador::class, 'create'])->name('$nombreParametro.create');
+    Route::post('/upload-$nombreParametro', [$nombreControlador::class, 'store'])->name('$nombreParametro.store');
+    Route::get('storage/$nombreParametro/{nombre_archivo}', [$nombreControlador::class, 'show'])->name('$nombreParametro.show');
+    Route::delete('/$nombreParametro/{nombre_archivo}', [$nombreControlador::class, 'destroy'])->name('$nombreParametro.destroy');
+    Route::get('/$nombreParametro-busqueda', [$nombreControlador::class, 'busqueda'])->name('$nombreParametro.busqueda');";
+
+    $rutaArchivoWeb = base_path('routes/web.php');
+    $fileContents = file_get_contents($rutaArchivoWeb);
+    $fileContents = str_replace($rutasGeneradas, '', $fileContents);
+    file_put_contents($rutaArchivoWeb, $fileContents);
+
+    // Eliminar referencia en el archivo navbar.blade.php
+    $rutaArchivo = resource_path('views/layouts/navbar.blade.php');
+    $codigoHtml = "
+    <li>
+        <a class='icon-container' href='{{ route('$nombreParametro.index') }}'>
+            <i class='fas fa-folder-open'></i>
+            $nombreParametro
+        </a>
+    </li>";
+
+    $contenidoActual = file_get_contents($rutaArchivo);
+    $contenidoActual = str_replace($codigoHtml, '', $contenidoActual);
+    file_put_contents($rutaArchivo, $contenidoActual);
+}
+
 }

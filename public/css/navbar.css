@@ -57,6 +57,9 @@
 
 
 
+
+
+
   /*Botones*/
 
 
@@ -82,10 +85,21 @@
 
 
   .icon-container{
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
+
+  .delete-icon {
+    visibility: hidden;
+    cursor: pointer;
+    transition: .6s ease;
+}
+
+.icon-container:hover .delete-icon {
+    visibility: visible;
+}
 
   @media (max-width: 700px) {
     .sidebar {

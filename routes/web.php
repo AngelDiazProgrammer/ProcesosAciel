@@ -40,7 +40,9 @@ Route::get('/pdfs-busqueda', [PdfController::class, 'busqueda'])->name('pdf.busq
 
 Route::get('/creador-carpetas', [CreadorController::class, 'creador'])->name('creador.creador');
 Route::get('/creador-carpetas-crear', [CreadorController::class, 'generarVistasYControlador'])->name('creador.crear');
- 
+Route::delete('/eliminar', [TuControlador::class, 'eliminarCarpeta'])->name('eliminar.carpeta');
+
+
  //rutas para sistemas
 
     use App\Http\Controllers\PdfsistemasController;
