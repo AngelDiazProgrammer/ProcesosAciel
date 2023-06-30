@@ -40,16 +40,15 @@ Route::get('/pdfs-busqueda', [PdfController::class, 'busqueda'])->name('pdf.busq
 
 Route::get('/creador-carpetas', [CreadorController::class, 'creador'])->name('creador.creador');
 Route::get('/creador-carpetas-crear', [CreadorController::class, 'generarVistasYControlador'])->name('creador.crear');
-Route::delete('/eliminar', [TuControlador::class, 'eliminarCarpeta'])->name('eliminar.carpeta');
+Route::delete('/eliminar-carpeta/{nombreParametro}', [CreadorController::class, 'eliminarCarpeta'])->name('eliminar.carpeta'); 
+ 
+ 
 
-
- //rutas para sistemas
-
-    use App\Http\Controllers\PdfsistemasController;
     
-    Route::get('/sistemas', [PdfsistemasController::class, 'index'])->name('sistemas.index');
-    Route::get('/upload-sistemas', [PdfsistemasController::class, 'create'])->name('sistemas.create');
-    Route::post('/upload-sistemas', [PdfsistemasController::class, 'store'])->name('sistemas.store');
-    Route::get('storage/sistemas . /{nombre_archivo}', [PdfsistemasController::class, 'show'])->name('sistemas.show');
-    Route::delete('/sistemas/{nombre_archivo}', [PdfsistemasController::class, 'destroy'])->name('sistemas.destroy');
-    Route::get('/sistemas-busqueda', [PdfsistemasController::class, 'busqueda'])->name('sistemas.busqueda');
+    
+    
+    
+    
+    
+    
+    

@@ -1,16 +1,48 @@
-.sidebar {
-    width: 200px;
-    height: 100vh; /* Cambia la altura a 100vh para ocupar toda la altura vertical */
-    background-color: #ffffff;
-    padding-left: 20px;
-    padding-top: 120px;
-    position: fixed; /* Cambia a posición fija para que se mantenga a la izquierda */
-    top: 0; /* Alinea la barra de navegación al inicio de la página */
-    left: 0; /* Alinea la barra de navegación a la izquierda */
-    z-index: 1;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-  }
-  
+#asidebar-container {
+  width: 200px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding-left: 20px;
+  padding-top: 120px;
+  position: fixed;
+  top: 0;
+  left: -200px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  z-index: 1;
+  transition: left 0.6s ease-in-out;
+}
+
+.navbar-toggle-button {
+  position: fixed;
+  top: 150px;
+  left: 0px;
+  font-size: 20px;
+  z-index: 2;
+  transition: transform 0.6s ease-in-out;
+  border: 0;
+  background: none;
+
+
+}
+.navbar-toggle-button a{
+  text-decoration: none;
+  color: #1fa1b3;
+}
+.navbar-toggle-button a:hover{
+  text-decoration: none;
+  color: #6fcdcd;
+}
+
+#asidebar-container.active {
+  left: 0;
+}
+
+#asidebar-container.active ~ #toggle-aside-button {
+  transform: translateX(200px) rotate(180deg);
+}
+
+ 
   .navigation {
     list-style-type: none;
     padding: 0;
@@ -21,6 +53,7 @@
     margin-bottom: 10px;
     margin-left: 0;
     margin-right: 20PX;
+    list-style: none;
   }
 
 
@@ -45,7 +78,7 @@
   
   .sub-navigation li {
     margin-bottom: px;
-    transition: .6s;
+    transition: .6s ease;
 
   }
   .sidebar li:hover .sub-navigation {
@@ -100,6 +133,49 @@
 .icon-container:hover .delete-icon {
     visibility: visible;
 }
+
+/* Estilos para el formulario */
+.formulario-eliminar {
+  display: none;
+  background: none;
+  border: none;
+  transition: color 0.6s ease
+}
+
+/* Estilos para el ícono de eliminar */
+.formulario-eliminar .fas.fa-trash {
+  color: #1fa1b3;
+  transition: color 0.6s ease
+  /* Otros estilos que desees aplicar */
+}
+.formulario-eliminar button {
+  background: none;
+  border: none;
+  transition: color 0.6s ease
+  /* Otros estilos que desees aplicar */
+}
+.icon-container:hover .formulario-eliminar {
+  display: block;
+  transition: color 0.6s ease
+}
+
+.formulario-eliminar .fas.fa-trash {
+  color: #1fa1b3;
+  transition: color 0.6s ease; /* Transición de color */
+}
+
+/* Estilos para mostrar el formulario cuando haces hover sobre el <li> */
+.icon-container:hover .formulario-eliminar {
+  display: block;
+  transition: color 0.6s ease
+}
+
+/* Cambiar el color del ícono al hacer hover sobre el <li> */
+.icon-container:hover .formulario-eliminar .fas.fa-trash {
+  color: #6fcdcd;
+  transition: color 0.6s ease
+}
+
 
   @media (max-width: 700px) {
     .sidebar {

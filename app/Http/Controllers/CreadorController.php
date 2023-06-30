@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pdf;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 class CreadorController extends Controller
@@ -147,7 +149,7 @@ class CreadorController extends Controller
     
     @section('content')
     <div class='general'>
-      <div class='search'>
+      <div class=''>
         <form action='{{ route('$nombreParametro.busqueda') }}' method='GET' class='search'>        
           <input type='text' name='busqueda' id='texto' class='form-control' placeholder='Buscar un archivo'>
           <input type='submit' value='Buscar' class='btn btn-primary'>
@@ -183,7 +185,7 @@ class CreadorController extends Controller
                 <a href='{{ route('$nombreParametro.show', basename(\$file)) }}' target='_blank'>
                   <button class='btn btn-info'>Abrir</button>
                 </a>
-                <form action='{{ route('sistemas.destroy', basename(\$file)) }}' method='POST'>
+                <form action='{{ route('$nombreParametro.destroy', basename(\$file)) }}' method='POST'>
                   @method('DELETE')
                   @csrf
                   <button type='submit' class='btn btn-danger'>Eliminar</button>
@@ -357,12 +359,21 @@ class $nombreControlador extends Controller
     $rutaArchivo = resource_path('views/layouts/navbar.blade.php');
 
     // Código HTML que deseas agregar
-    $codigoHtml = "
-<li>
-    <a class='icon-container' href='{{ route('$nombreParametro.index') }}'>
+    $codigoHtml = "<li class='icon-container'>
+    <a href='{{ route('$nombreParametro.index') }}'>
         <i class='fas fa-folder-open'></i>
         $nombreParametro
-        </a>
+    </a>
+    <a>
+        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' onsubmit='return confirm('¿Estás seguro de que deseas eliminar esta carpeta?');' class='formulario-eliminar'>
+            @csrf
+            @method('DELETE')
+            <input type='hidden' name='nombreParametro' value='$nombreParametro'> <!-- Agrega un campo oculto con el valor de nombreParametro -->
+            <button type='submit' class='icon-container'>
+                <i class='fas fa-trash'></i>
+            </button>
+        </form>
+    </a>
 </li>";
 
     // Leer el contenido actual del archivo
@@ -385,58 +396,96 @@ class $nombreControlador extends Controller
   }
 
   public function eliminarCarpeta(Request $request)
-{
+  {
     $nombreParametro = $request->get('nombreParametro');
+    $nombreControlador = 'Pdf' . $nombreParametro . 'Controller';
+
+    // Ruta del archivo web.php
+    $rutaArchivoWeb = base_path('routes/web.php');
+
+    // Generar las rutas a buscar y eliminar
+    $rutasGeneradas = [
+      "//rutas para $nombreParametro",
+      "use App\Http\Controllers\\$nombreControlador;",
+      "Route::get('/$nombreParametro', [$nombreControlador::class, 'index'])->name('$nombreParametro.index');",
+      "Route::get('/upload-$nombreParametro', [$nombreControlador::class, 'create'])->name('$nombreParametro.create');",
+      "Route::post('/upload-$nombreParametro', [$nombreControlador::class, 'store'])->name('$nombreParametro.store');",
+      "Route::get('storage/$nombreParametro . /{nombre_archivo}', [$nombreControlador::class, 'show'])->name('$nombreParametro.show');",
+      "Route::delete('/$nombreParametro/{nombre_archivo}', [$nombreControlador::class, 'destroy'])->name('$nombreParametro.destroy');",
+      "Route::get('/$nombreParametro-busqueda', [$nombreControlador::class, 'busqueda'])->name('$nombreParametro.busqueda');"
+    ];
+
+    // Leer el contenido actual del archivo web.php
+    $contenidoActual = file_get_contents($rutaArchivoWeb);
+
+    // Buscar y eliminar cada una de las rutas generadas
+    foreach ($rutasGeneradas as $rutaGenerada) {
+      $contenidoActual = str_replace($rutaGenerada, '', $contenidoActual);
+    }
+
+    // Guardar el contenido actualizado en el archivo web.php
+    file_put_contents($rutaArchivoWeb, $contenidoActual);
+
+
 
     // Eliminar carpeta de almacenamiento de archivos PDF
     $carpetaS = public_path('storage/' . $nombreParametro);
     if (File::exists($carpetaS)) {
-        File::deleteDirectory($carpetaS);
+      File::deleteDirectory($carpetaS);
     }
 
     // Eliminar carpeta de vistas
     $carpeta = resource_path('views/' . $nombreParametro);
     if (File::exists($carpeta)) {
-        File::deleteDirectory($carpeta);
+      File::deleteDirectory($carpeta);
     }
 
     // Eliminar controlador
     $nombreControlador = 'Pdf' . $nombreParametro . 'Controller';
     $rutaControlador = app_path('Http/Controllers/' . $nombreControlador . '.php');
     if (File::exists($rutaControlador)) {
-        File::delete($rutaControlador);
+      File::delete($rutaControlador);
     }
-
-    // Eliminar rutas generadas
-    $rutasGeneradas = "
-    // Rutas para $nombreParametro
-    use App\Http\Controllers\\$nombreControlador;
-
-    Route::get('/$nombreParametro', [$nombreControlador::class, 'index'])->name('$nombreParametro.index');
-    Route::get('/upload-$nombreParametro', [$nombreControlador::class, 'create'])->name('$nombreParametro.create');
-    Route::post('/upload-$nombreParametro', [$nombreControlador::class, 'store'])->name('$nombreParametro.store');
-    Route::get('storage/$nombreParametro/{nombre_archivo}', [$nombreControlador::class, 'show'])->name('$nombreParametro.show');
-    Route::delete('/$nombreParametro/{nombre_archivo}', [$nombreControlador::class, 'destroy'])->name('$nombreParametro.destroy');
-    Route::get('/$nombreParametro-busqueda', [$nombreControlador::class, 'busqueda'])->name('$nombreParametro.busqueda');";
-
-    $rutaArchivoWeb = base_path('routes/web.php');
-    $fileContents = file_get_contents($rutaArchivoWeb);
-    $fileContents = str_replace($rutasGeneradas, '', $fileContents);
-    file_put_contents($rutaArchivoWeb, $fileContents);
-
     // Eliminar referencia en el archivo navbar.blade.php
     $rutaArchivo = resource_path('views/layouts/navbar.blade.php');
-    $codigoHtml = "
-    <li>
-        <a class='icon-container' href='{{ route('$nombreParametro.index') }}'>
-            <i class='fas fa-folder-open'></i>
-            $nombreParametro
-        </a>
-    </li>";
+
+    $codigoHtml = "<li class='icon-container'>
+    <a href='{{ route('$nombreParametro.index') }}'>
+        <i class='fas fa-folder-open'></i>
+        $nombreParametro
+    </a>
+    <a>
+        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' onsubmit='return confirm('¿Estás seguro de que deseas eliminar esta carpeta?');' class='formulario-eliminar'>
+            @csrf
+            @method('DELETE')
+            <input type='hidden' name='nombreParametro' value='$nombreParametro'> <!-- Agrega un campo oculto con el valor de nombreParametro -->
+            <button type='submit' class='icon-container'>
+                <i class='fas fa-trash'></i>
+            </button>
+        </form>
+    </a>
+</li>";
 
     $contenidoActual = file_get_contents($rutaArchivo);
     $contenidoActual = str_replace($codigoHtml, '', $contenidoActual);
     file_put_contents($rutaArchivo, $contenidoActual);
-}
 
+    // Obtener los archivos PDF relacionados con la carpeta
+    $pdfs = Pdf::where('nombre_archivo', $nombreParametro)->get();
+
+    // Eliminar los archivos PDF de la base de datos y de la carpeta de almacenamiento
+    foreach ($pdfs as $pdf) {
+      $nombreArchivo = $pdf->nombre_archivo;
+      $rutaArchivo = public_path('storage/' . $nombreParametro . '/' . $nombreArchivo);
+    
+      if (File::exists($rutaArchivo)) {
+        File::delete($rutaArchivo);
+      }
+    
+      $pdf->delete();
+    }
+
+
+    return redirect()->route('pdf.index')->with('success', 'Carpeta eliminada con exito');
+  }
 }
