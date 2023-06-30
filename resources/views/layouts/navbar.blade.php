@@ -1,7 +1,10 @@
 <aside class="sidebar inactive" id="asidebar-container">
     <ul class="navigation">
         <li>
-            <a href="{{ route('creador.creador') }}">Crear carpeta</a>
+            
+            <a href="{{ route('creador.creador') }}">
+                <i class="fas fa-folder-plus"></i>
+                Crear carpeta</a>
         </li>
 
         <li>
