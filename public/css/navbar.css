@@ -28,6 +28,7 @@
 .navbar-toggle-button a{
   text-decoration: none;
   color: #1fa1b3;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 .navbar-toggle-button a:hover{
   text-decoration: none;
