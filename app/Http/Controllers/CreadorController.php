@@ -365,7 +365,7 @@ class $nombreControlador extends Controller
         $nombreParametro
     </a>
     <a>
-        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' onsubmit='return confirm('¿Estás seguro de que deseas eliminar esta carpeta?');' class='formulario-eliminar'>
+        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' class='formulario-eliminar'>
             @csrf
             @method('DELETE')
             <input type='hidden' name='nombreParametro' value='$nombreParametro'> <!-- Agrega un campo oculto con el valor de nombreParametro -->
@@ -455,7 +455,7 @@ class $nombreControlador extends Controller
         $nombreParametro
     </a>
     <a>
-        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' onsubmit='return confirm('¿Estás seguro de que deseas eliminar esta carpeta?');' class='formulario-eliminar'>
+        <form action='{{ route('eliminar.carpeta', ['nombreParametro' => '$nombreParametro']) }}' method='POST' class='formulario-eliminar'>
             @csrf
             @method('DELETE')
             <input type='hidden' name='nombreParametro' value='$nombreParametro'> <!-- Agrega un campo oculto con el valor de nombreParametro -->

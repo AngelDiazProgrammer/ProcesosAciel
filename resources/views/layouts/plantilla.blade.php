@@ -38,4 +38,5 @@
     
 </body>
 <script src="{{ asset('js/aside.js') }}"></script>
+<script src="{{ asset('js/confirmar.js') }}"></script>
 </html>

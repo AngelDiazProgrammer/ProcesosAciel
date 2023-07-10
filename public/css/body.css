@@ -14,11 +14,11 @@ input[type="texto"] {
 }
 
 .general{
-  width: 850px;
+  width: 800px;
   height: 800px;
   padding: 0px;
   margin-top: 150px;
-  margin-left: 200px;
+  margin-left: 150px;
   border-radius: 10px;
   font-style: italic;
   font-weight: 500; 
@@ -172,6 +172,8 @@ input[type="texto"] {
   font-size: 12px;
   margin-top: 5px;
 }
+
+
 
 
 @keyframes fadeOut {

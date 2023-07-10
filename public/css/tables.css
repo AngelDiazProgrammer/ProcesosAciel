@@ -30,7 +30,13 @@ th {
 td {
   padding: 10px;
   border-bottom: solid 1px #000000;
-}
+  word-break: break-word;
+  max-width: 200px; /* Establece el ancho máximo deseado */
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el contenido que excede el ancho máximo */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos (...) para indicar contenido truncado */
+
+}   
 
 tbody tr:hover {
   background-color: #198694;

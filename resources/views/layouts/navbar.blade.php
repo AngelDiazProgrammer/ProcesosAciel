@@ -15,12 +15,17 @@
         </li>
 </ul></aside>
 
+
+
 <button id="toggle-aside-button" class="navbar-toggle-button">
     <a class="icon-container">
         <i class="fas fa-angle-double-right"></i>
 </a>
   </button>
+
         
+  @include('layouts.modal')
+
 
 
             

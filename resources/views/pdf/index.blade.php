@@ -54,7 +54,7 @@
                                 <form action="{{ route('pdf.destroy', $pdf->nombre_archivo) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger" id="formulario-eliminar">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
